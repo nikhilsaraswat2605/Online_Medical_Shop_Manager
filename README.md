@@ -27,4 +27,4 @@ implementing the following functionalities:
     6. List all the purchases made by a customer.
     7. List inventory of a shop (Products and counts).
     8. Products made by a manufacturer.
-    9. A master text-based interface to access all the above functionalities.
+    9. A master text-based interface to access all the above functionalities. 
