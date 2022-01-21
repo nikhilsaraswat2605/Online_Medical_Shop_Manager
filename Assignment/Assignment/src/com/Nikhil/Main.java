@@ -13,7 +13,7 @@ class Entity {
 }
 
 // Below all the classes have been inherited from the Entity (base) Class
-class Product extends com.Nikhil.Entity {
+class Product extends Entity {
     Integer Manufacturer;
 
     //constructor
@@ -27,7 +27,7 @@ class Product extends com.Nikhil.Entity {
     }
 }
 
-class Manufacturer extends com.Nikhil.Entity {
+class Manufacturer extends Entity {
     ArrayList<Integer> Products = new ArrayList<>();
 
     //constructor
@@ -48,7 +48,7 @@ class Manufacturer extends com.Nikhil.Entity {
     }
 }
 
-class DeliveryAgent extends com.Nikhil.Entity {
+class DeliveryAgent extends Entity {
     int ZipCode;
     int DeleveryNumber = 0;
 
@@ -64,7 +64,7 @@ class DeliveryAgent extends com.Nikhil.Entity {
     }
 }
 
-class Shop extends com.Nikhil.Entity {
+class Shop extends Entity {
     int ZipCode;
     HashMap<Integer, Integer> Product_Copies = new HashMap<>();
 
@@ -91,7 +91,7 @@ class Shop extends com.Nikhil.Entity {
     }
 }
 
-class Customer extends com.Nikhil.Entity {
+class Customer extends Entity {
     int ZipCode;
     ArrayList<Integer> ProductsList = new ArrayList<>();
     HashMap<Integer, Integer> Product_Count = new HashMap<>();
@@ -116,12 +116,12 @@ class Customer extends com.Nikhil.Entity {
 }
 
 class Order {
-    com.Nikhil.Product product;
-    com.Nikhil.Customer customer;
+    Product product;
+    Customer customer;
     Integer copies;
 
     //constructor
-    Order(com.Nikhil.Product Prod, com.Nikhil.Customer cm, int copy) {
+    Order(Product Prod, Customer cm, int copy) {
         this.product = Prod;
         this.customer = cm;
         this.copies = copy;
@@ -129,9 +129,9 @@ class Order {
 }
 
 // creates the comparator for comparing Number of Deliveries
-class sorterDeliveryAgents implements Comparator<com.Nikhil.DeliveryAgent> { //sorting is done in increasing order of Number of deliveries, if number of deliveries are same then sorting is done in increasing order of IDs
+class sorterDeliveryAgents implements Comparator<DeliveryAgent> { //sorting is done in increasing order of Number of deliveries, if number of deliveries are same then sorting is done in increasing order of IDs
     // override the compare() method
-    public int compare(com.Nikhil.DeliveryAgent l1, com.Nikhil.DeliveryAgent l2) {
+    public int compare(DeliveryAgent l1, DeliveryAgent l2) {
         if (l1.DeleveryNumber == l2.DeleveryNumber) {
             if (l1.id > l2.id) return 1;
             else return -1;
@@ -145,18 +145,18 @@ class MasterInterface {
     // Below all the Data Structures are for storing data all the Entities
     ArrayList<Integer> ExistingIDs = new ArrayList<>();
     HashMap<Integer, String> ProductIdNameMap = new HashMap<>();
-    ArrayList<com.Nikhil.Manufacturer> ManufacturerList = new ArrayList<>();
-    ArrayList<com.Nikhil.Product> ProductList = new ArrayList<>();
-    ArrayList<com.Nikhil.Shop> ShopList = new ArrayList<>();
-    ArrayList<com.Nikhil.Customer> CustomerList = new ArrayList<>();
-    ArrayList<com.Nikhil.Order> OrderList = new ArrayList<>();
-    ArrayList<com.Nikhil.DeliveryAgent> DeliveryAgentList = new ArrayList<>();
+    ArrayList<Manufacturer> ManufacturerList = new ArrayList<>();
+    ArrayList<Product> ProductList = new ArrayList<>();
+    ArrayList<Shop> ShopList = new ArrayList<>();
+    ArrayList<Customer> CustomerList = new ArrayList<>();
+    ArrayList<Order> OrderList = new ArrayList<>();
+    ArrayList<DeliveryAgent> DeliveryAgentList = new ArrayList<>();
 
     /*Below all the functions are for controlling all the actions*/
 
     //This function is for adding products to the Product ArrayList
-    void AddProductToProductList(com.Nikhil.Product product) {
-        for (com.Nikhil.Product pro : this.ProductList) {
+    void AddProductToProductList(Product product) {
+        for (Product pro : this.ProductList) {
             if (pro.id.equals(product.id)) return;
         }
         this.ProductList.add(product);
@@ -176,7 +176,7 @@ class MasterInterface {
 
     //This function is to check whether the given Product ID already exists in the records or not
     boolean checkProductID(Integer ID) {
-        for (com.Nikhil.Product product : this.ProductList) {
+        for (Product product : this.ProductList) {
             if (product.id.equals(ID)) return true;
         }
         return false;
@@ -184,7 +184,7 @@ class MasterInterface {
 
     //This function is to check whether the given Manufacturer ID already exists in the records or not
     boolean checkManufacturerID(Integer ID) {
-        for (com.Nikhil.Manufacturer manufacturer : this.ManufacturerList) {
+        for (Manufacturer manufacturer : this.ManufacturerList) {
             if (manufacturer.id.equals(ID)) return true;
         }
         return false;
@@ -192,7 +192,7 @@ class MasterInterface {
 
     //This function is to check whether the given Customer ID already exists in the records or not
     boolean checkCustomerID(Integer ID) {
-        for (com.Nikhil.Customer customer : this.CustomerList) {
+        for (Customer customer : this.CustomerList) {
             if (customer.id.equals(ID)) return true;
         }
         return false;
@@ -200,7 +200,7 @@ class MasterInterface {
 
     //This function is to check whether the given Shop ID already exists in the records or not
     boolean checkShopID(Integer ID) {
-        for (com.Nikhil.Shop shop : this.ShopList) {
+        for (Shop shop : this.ShopList) {
             if (shop.id.equals(ID)) return true;
         }
         return false;
@@ -208,7 +208,7 @@ class MasterInterface {
 
     //This function is to check whether the given delivery agent ID already exists in the records or not
     boolean checkdeliveryAgentID(Integer ID) {
-        for (com.Nikhil.DeliveryAgent deliveryAgent : this.DeliveryAgentList) {
+        for (DeliveryAgent deliveryAgent : this.DeliveryAgentList) {
             if (deliveryAgent.id.equals(ID)) return true;
         }
         return false;
@@ -344,9 +344,9 @@ class MasterInterface {
     }
 
     //This function is for adding an order for a particular Customer
-    boolean AddOrder(com.Nikhil.Customer customer, com.Nikhil.Product product, int copies) {
+    boolean AddOrder(Customer customer, Product product, int copies) {
         if (checkCustomerID(customer.id) && checkProductID(product.id)) {
-            com.Nikhil.Order newOrder = new com.Nikhil.Order(product, customer, copies);
+            Order newOrder = new Order(product, customer, copies);
             OrderList.add(newOrder);
             return true;
         } else if (this.checkProductID(product.id)) {
@@ -358,9 +358,9 @@ class MasterInterface {
     }
 
     //This function is for processing an order for a particular Customer
-    Boolean processOrder(com.Nikhil.Order order) {
-        this.DeliveryAgentList.sort(new com.Nikhil.sorterDeliveryAgents());
-        for (com.Nikhil.Shop shop : this.ShopList) {
+    Boolean processOrder(Order order) {
+        this.DeliveryAgentList.sort(new sorterDeliveryAgents());
+        for (Shop shop : this.ShopList) {
             if (shop.ZipCode == order.customer.ZipCode) {
                 if (shop.Product_Copies.containsKey(order.product.id)) {
                     int oldcopy = shop.Product_Copies.get(order.product.id);
@@ -386,10 +386,10 @@ class MasterInterface {
 
     // This function is for some initial default (sample) data
     void defaultValues() {
-        this.ManufacturerList.add(new com.Nikhil.Manufacturer(1, "Cipla"));
-        this.ProductList.add(new com.Nikhil.Product(2, "AZOMYCIN 200"));
-        this.ProductList.add(new com.Nikhil.Product(3, "CEFIX 100"));
-        this.ProductList.add(new com.Nikhil.Product(4, "OMNICLAV 375"));
+        this.ManufacturerList.add(new Manufacturer(1, "Cipla"));
+        this.ProductList.add(new Product(2, "AZOMYCIN 200"));
+        this.ProductList.add(new Product(3, "CEFIX 100"));
+        this.ProductList.add(new Product(4, "OMNICLAV 375"));
         this.ProductIdNameMap.put(2, "AZOMYCIN 200");
         this.ProductIdNameMap.put(3, "CEFIX 100");
         this.ProductIdNameMap.put(4, "OMNICLAV 375");
@@ -397,17 +397,17 @@ class MasterInterface {
             this.ProductList.get(i).setManufacturer(1);
             this.ManufacturerList.get(0).addProduct(this.ProductList.get(i).id);
         }
-        this.ShopList.add(new com.Nikhil.Shop(5, "Aggarwal Medical Store", 1));
-        this.ShopList.add(new com.Nikhil.Shop(6, "Krishna Medical Hall", 1));
+        this.ShopList.add(new Shop(5, "Aggarwal Medical Store", 1));
+        this.ShopList.add(new Shop(6, "Krishna Medical Hall", 1));
         this.AddCopiesOfProductToShop(5, 2, 400);
         this.AddCopiesOfProductToShop(5, 3, 200);
         this.AddCopiesOfProductToShop(6, 2, 700);
         this.AddCopiesOfProductToShop(6, 4, 500);
-        this.CustomerList.add(new com.Nikhil.Customer(7, "Nikhil Saraswat", 1));
-        this.CustomerList.add(new com.Nikhil.Customer(8, "Rohit Gupta", 2));
-        this.DeliveryAgentList.add(new com.Nikhil.DeliveryAgent(9, "Praveen", 1));
-        this.DeliveryAgentList.add(new com.Nikhil.DeliveryAgent(10, "Arvind", 1));
-        this.DeliveryAgentList.add(new com.Nikhil.DeliveryAgent(11, "Nandan", 2));
+        this.CustomerList.add(new Customer(7, "Nikhil Saraswat", 1));
+        this.CustomerList.add(new Customer(8, "Rohit Gupta", 2));
+        this.DeliveryAgentList.add(new DeliveryAgent(9, "Praveen", 1));
+        this.DeliveryAgentList.add(new DeliveryAgent(10, "Arvind", 1));
+        this.DeliveryAgentList.add(new DeliveryAgent(11, "Nandan", 2));
         for (int i = 1; i < 12; i++) this.ExistingIDs.add(i);
     }
 }
@@ -417,7 +417,7 @@ public class Main {
     public static void main(String[] args) {
         // write your code here
         System.out.println("\n-------------------------------------------------------------\n----------------Welcome to the Medicine Shop!----------------\n-------------------------------------------------------------\n");
-        com.Nikhil.MasterInterface MI = new com.Nikhil.MasterInterface(); // declaring an object MI of class MasterInterface
+        MasterInterface MI = new MasterInterface(); // declaring an object MI of class MasterInterface
         Scanner scan = new Scanner(System.in); // declaring an object scan of class Scanner for input
 
 
@@ -473,7 +473,7 @@ public class Main {
                             System.out.println("This manufacturer ID does not exist in our records!");
                             continue;
                         }
-                        com.Nikhil.Product product = new com.Nikhil.Product(id, name);
+                        Product product = new Product(id, name);
                         product.setManufacturer(manufacturerId);
                         MI.AddProductToProductList(product);
                         MI.AddProdToManufacturer(id, manufacturerId);
@@ -482,7 +482,7 @@ public class Main {
                             System.out.println("This ID already exists in our records!");
                             continue;
                         }
-                        com.Nikhil.Manufacturer manufacturer = new com.Nikhil.Manufacturer(id, name);
+                        Manufacturer manufacturer = new Manufacturer(id, name);
                         MI.ManufacturerList.add(manufacturer);
                     } else if (Entity.equals("customer")) {
                         if (MI.checkID_invalidity(id) || MI.checkCustomerID(id)) {
@@ -492,7 +492,7 @@ public class Main {
                         System.out.println("Enter the zip code of the customer : ");
                         int zip = scan.nextInt();
                         scan.nextLine();
-                        com.Nikhil.Customer customer = new com.Nikhil.Customer(id, name, zip);
+                        Customer customer = new Customer(id, name, zip);
                         MI.CustomerList.add(customer);
                     } else if (Entity.equals("shop")) {
                         if (MI.checkID_invalidity(id) || MI.checkShopID(id)) {
@@ -502,7 +502,7 @@ public class Main {
                         System.out.println("Enter the zip code of the shop : ");
                         int zip = scan.nextInt();
                         scan.nextLine();
-                        com.Nikhil.Shop shop = new com.Nikhil.Shop(id, name, zip);
+                        Shop shop = new Shop(id, name, zip);
                         MI.ShopList.add(shop);
                     } else if (Entity.equals("delivery agent")) {
                         if (MI.checkID_invalidity(id) || MI.checkdeliveryAgentID(id)) {
@@ -512,7 +512,7 @@ public class Main {
                         System.out.println("Enter the zip code of the delivery agent : ");
                         int zip = scan.nextInt();
                         scan.nextLine();
-                        com.Nikhil.DeliveryAgent deliveryAgent = new com.Nikhil.DeliveryAgent(id, name, zip);
+                        DeliveryAgent deliveryAgent = new DeliveryAgent(id, name, zip);
                         MI.DeliveryAgentList.add(deliveryAgent);
                     } else {
                         System.out.println("Wrong Input!");
@@ -620,7 +620,7 @@ public class Main {
                             System.out.println("Sorry!, There is no product in our Records");
                         else {
                             System.out.println("\nThe List of all products is as following :-");
-                            for (com.Nikhil.Product product : MI.ProductList)
+                            for (Product product : MI.ProductList)
                                 System.out.println("ID : " + product.id + ", Name : " + product.name);
                         }
                     } else if (Entity.equals("customer")) {
@@ -628,7 +628,7 @@ public class Main {
                             System.out.println("Sorry!, There is no customer in our Records");
                         else {
                             System.out.println("\nThe List of all customers is as following :-");
-                            for (com.Nikhil.Customer customer : MI.CustomerList)
+                            for (Customer customer : MI.CustomerList)
                                 System.out.println("ID : " + customer.id + ", Name : " + customer.name);
                         }
                     } else if (Entity.equals("manufacturer")) {
@@ -636,7 +636,7 @@ public class Main {
                             System.out.println("Sorry!, There is no manufacturer in our Records");
                         else {
                             System.out.println("The List of all manufacturer is as following :-");
-                            for (com.Nikhil.Manufacturer manufacturer : MI.ManufacturerList) {
+                            for (Manufacturer manufacturer : MI.ManufacturerList) {
                                 System.out.println("ID : " + manufacturer.id + ", Name : " + manufacturer.name);
                             }
                         }
@@ -644,7 +644,7 @@ public class Main {
                         if (MI.ShopList.size() == 0) System.out.println("Sorry!, There is no shop in our Records");
                         else {
                             System.out.println("The List of all shops is as following :-");
-                            for (com.Nikhil.Shop shop : MI.ShopList)
+                            for (Shop shop : MI.ShopList)
                                 System.out.println("ID : " + shop.id + ", Name : " + shop.name);
                         }
                     } else if (Entity.equals("delivery agent")) {
@@ -652,7 +652,7 @@ public class Main {
                             System.out.println("Sorry!, There is no delivery agent in our Records");
                         else {
                             System.out.println("The List of all delivery agents is as following :-");
-                            for (com.Nikhil.DeliveryAgent deliveryAgent : MI.DeliveryAgentList) {
+                            for (DeliveryAgent deliveryAgent : MI.DeliveryAgentList) {
                                 System.out.println("ID : " + deliveryAgent.id + ", Name : " + deliveryAgent.name);
                             }
                         }
@@ -687,10 +687,10 @@ public class Main {
                 System.out.println("Enter the id of the Customer : ");
                 int idCMR = scan.nextInt();
                 scan.nextLine();
-                com.Nikhil.Customer CMR = new com.Nikhil.Customer(-1, "", -1);
-                for (com.Nikhil.Customer customer : MI.CustomerList) {
+                Customer CMR = new Customer(-1, "", -1);
+                for (Customer customer : MI.CustomerList) {
                     if (customer.id.equals(idCMR)) {
-                        CMR = new com.Nikhil.Customer(customer.id, customer.name, customer.ZipCode);
+                        CMR = new Customer(customer.id, customer.name, customer.ZipCode);
                     }
                 }
                 if (CMR.id.equals(-1)) {
@@ -700,10 +700,10 @@ public class Main {
                 System.out.println("Enter the id of the Product : ");
                 int idProd = scan.nextInt();
                 scan.nextLine();
-                com.Nikhil.Product Prod = new com.Nikhil.Product(-1, "");
-                for (com.Nikhil.Product product : MI.ProductList) {
+                Product Prod = new Product(-1, "");
+                for (Product product : MI.ProductList) {
                     if (product.id == idProd) {
-                        Prod = new com.Nikhil.Product(product.id, product.name);
+                        Prod = new Product(product.id, product.name);
                     }
                 }
                 if (Prod.id.equals(-1)) {
@@ -723,7 +723,7 @@ public class Main {
                 }
                 System.out.println("Choose any of given orders :-");
                 int i = 0;
-                for (com.Nikhil.Order order : MI.OrderList) {
+                for (Order order : MI.OrderList) {
                     System.out.println("Type " + i + ": for Customer ID: '" + order.customer.id + "', Product ID: '" + order.product.id + "', Product copies: " + order.copies + ", ZipCode: " + order.customer.ZipCode);
                     i++;
                 }
