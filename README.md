@@ -15,7 +15,7 @@ Your task is to design and implement a java program following the object oriente
 &emsp;&emsp;    2. Add a product to manufacturer.<br/>
 &emsp;&emsp;    3. Add a certain number of copies of a product to a shop.<br/>
 &emsp;&emsp;    4. Add an order of a product from a customer.<br/>
-&emsp;&emsp;    5. Process an order (can be satisfied only if the product is available at a shop in the customer’s zipcode). Also assign a delivery agent &emsp;&emsp;&emsp;who has delivered the least number products.<br/>
+&emsp;&emsp;    5. Process an order (can be satisfied only if the product is available at a shop in the customer’s zipcode). Also &emsp;&emsp;&emsp;assign a delivery agent who has delivered the least number products.<br/>
 &emsp;&emsp;    6. List all the purchases made by a customer.<br/>
 &emsp;&emsp;    7. List inventory of a shop (Products and counts).<br/>
 &emsp;&emsp;    8. Products made by a manufacturer.<br/>
